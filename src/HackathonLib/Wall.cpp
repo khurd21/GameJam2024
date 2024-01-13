@@ -1,4 +1,4 @@
-#include <HackathonLib/Wall.hpp>
+#include <HackathonLib/Objects/Wall.hpp>
 #include <HackathonLib/Type.hpp>
 #include <SFML/Graphics.hpp>
 

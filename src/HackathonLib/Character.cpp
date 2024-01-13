@@ -1,4 +1,4 @@
-#include <HackathonLib/Character.hpp>
+#include <HackathonLib/Objects/Character.hpp>
 #include <HackathonLib/Type.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -16,12 +16,6 @@ void Character::update() {
 
 void Character::handleInput(sf::RenderWindow& window) {
     // Handle user input for character movement
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        m_shape.move(0, -m_movementSpeed);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        m_shape.move(0, m_movementSpeed);
-    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         m_shape.move(-m_movementSpeed, 0);
     }
@@ -61,7 +55,6 @@ void Character::handleCollision(const sf::FloatRect& shape, Type type) {
             else if (m_shape.getPosition().y > shape.top) {
                 m_shape.move(0, m_movementSpeed);
             }
-
             // Left
             else if (m_shape.getPosition().x < shape.left + shape.width) {
             }

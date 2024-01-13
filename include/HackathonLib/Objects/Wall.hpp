@@ -1,7 +1,7 @@
 #ifndef WALL_HPP
 #define WALL_HPP
 
-#include <HackathonLib/IObject.hpp>
+#include <HackathonLib/Objects/IObject.hpp>
 #include <SFML/Graphics.hpp>
 
 enum class Type;

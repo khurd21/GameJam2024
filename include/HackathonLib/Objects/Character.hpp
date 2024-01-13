@@ -2,7 +2,7 @@
 #define CHARACTER_HPP
 
 #include <SFML/Graphics.hpp>
-#include <HackathonLib/IObject.hpp>
+#include <HackathonLib/Objects/IObject.hpp>
 #include <HackathonLib/Type.hpp>
 
 class Character : public IObject {

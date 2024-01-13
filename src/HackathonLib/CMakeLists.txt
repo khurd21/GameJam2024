@@ -4,6 +4,7 @@ set(sources
     Character.cpp
     Game.cpp
     Wall.cpp
+    Runners/GameRunner.cpp
     )
 
 set(include_dir ${PROJECT_SOURCE_DIR}/include)
@@ -14,6 +15,8 @@ set(includes
     ${lib_dir}/Game.hpp
     ${lib_dir}/Wall.hpp
     ${lib_dir}/Type.hpp
+    ${lib_dir}/Runners/GameRunner.hpp
+    ${lib_dir}/Runners/IRunner.hpp
     )
 
 add_library(${lib_name} ${sources} ${includes})
