@@ -1,6 +1,8 @@
+#include <vector>
+
 #include <HackathonLib/Runners/IRunner.hpp>
 #include <HackathonLib/Objects/Character.hpp>
-#include <HackathonLib/Objects/Wall.hpp>
+#include <HackathonLib/Objects/Token.hpp>
 
 namespace sf {
 class RenderWindow;
@@ -14,6 +16,14 @@ public:
 private:
 
     sf::RenderWindow* m_window;
-    Character m_character{800.0f, 300.0f, 30.0f};
-    Wall m_wall{500.0f, 500.0f, 200.0f, 100.0f};
+    Character m_character{800.0f, 200.0f, 30.0f};
+    std::vector<Token> m_birds;
+    std::vector<Token> m_clock5;
+    std::vector<Token> m_clock10;
+    std::vector<Token> m_clouds;
+    std::vector<Token> m_coins1;
+    std::vector<Token> m_coins2;
+
+    int m_score;
+    int m_time;
 };

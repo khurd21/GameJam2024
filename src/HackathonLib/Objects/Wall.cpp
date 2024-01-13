@@ -9,7 +9,7 @@ Wall::Wall(float x, float y, float width, float height) {
     m_shape.setOrigin(width / 2.0f, height / 2.0f);
 }
 
-void Wall::update() {}
+void Wall::update(float deltaTime) {}
 
 void Wall::handleInput(sf::RenderWindow& window) {}
 

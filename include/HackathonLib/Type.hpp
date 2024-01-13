@@ -3,10 +3,10 @@
 
 enum class Type {
 
-    Friend,
     Enemy,
-    Projectile,
-    Wall,
+    Cloud,
+    PowerUp,
+    Character,
 
 }; // enum class Type
 

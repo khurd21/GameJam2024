@@ -10,7 +10,7 @@ Character::Character(float x, float y, float radius) {
     m_shape.setOrigin(radius, radius);
 }
 
-void Character::update() {
+void Character::update(float deltaTime) {
 
 }
 
@@ -25,7 +25,7 @@ void Character::handleInput(sf::RenderWindow& window) {
 }
 
 sf::FloatRect Character::getBoundingBox() const {
-        return m_shape.getGlobalBounds();
+    return m_shape.getGlobalBounds();
 }
 
 void Character::draw(sf::RenderWindow& window) const {
@@ -33,31 +33,21 @@ void Character::draw(sf::RenderWindow& window) const {
 }
 
 bool Character::isCollision(const sf::FloatRect& shape) const {
-    return false;
+    return getBoundingBox().intersects(shape);
 }
 
 void Character::handleCollision(const sf::FloatRect& shape, Type type) {
-    if (type == Type::Wall) {
-        if (getBoundingBox().intersects(shape)) {
-            // Right
-            if (m_shape.getPosition().x < shape.left) {
-                m_shape.move(-m_movementSpeed, 0);
-            }
-            // Left
-            else if (m_shape.getPosition().x + m_shape.getGlobalBounds().width > shape.left + shape.width) {
-                m_shape.move(m_movementSpeed, 0);
-            }
-            // Top
-            else if (m_shape.getPosition().y + m_shape.getGlobalBounds().height < shape.top + shape.height) {
-                m_shape.move(0, -m_movementSpeed);
-            }
-            // Bottom
-            else if (m_shape.getPosition().y > shape.top) {
-                m_shape.move(0, m_movementSpeed);
-            }
-            // Left
-            else if (m_shape.getPosition().x < shape.left + shape.width) {
-            }
+    if (getBoundingBox().intersects(shape)) {
+        if (Type::Cloud == type) {
+            // Change to the frozen sprite
+            // Freezing sound
+        }
+        else if (Type::Enemy == type) {
+            // Character blinks
+            // Hit sound
+        }
+        else if (Type::PowerUp == type) {
+            // 
         }
     }
 }

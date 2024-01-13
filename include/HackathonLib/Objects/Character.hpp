@@ -8,7 +8,7 @@
 class Character : public IObject {
 public:
     Character(float x, float y, float radius);
-    virtual void update() override;
+    virtual void update(float deltaTime) override;
     virtual void handleInput(sf::RenderWindow& window) override;
     virtual sf::FloatRect getBoundingBox() const override;
     virtual void draw(sf::RenderWindow& window) const override;

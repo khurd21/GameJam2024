@@ -9,7 +9,7 @@ enum class Type;
 class Wall : public IObject {
 public:
     Wall(float x, float y, float width, float height);
-    virtual void update() override;
+    virtual void update(float deltaTime) override;
     virtual void handleInput(sf::RenderWindow& window) override;
     virtual sf::FloatRect getBoundingBox() const override;
     virtual void draw(sf::RenderWindow& window) const override;

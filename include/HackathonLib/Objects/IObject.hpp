@@ -8,7 +8,7 @@ class IObject {
 public:
     virtual ~IObject() = default;
 
-    virtual void update() = 0;
+    virtual void update(float deltaTime) = 0;
     virtual void handleInput(sf::RenderWindow& window) = 0;
     virtual sf::FloatRect getBoundingBox() const = 0;
     virtual void draw(sf::RenderWindow& window) const = 0;
