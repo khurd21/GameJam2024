@@ -7,6 +7,8 @@ set(sources
     Game.cpp
     PixelPerfectDetection.cpp
     Runners/GameRunner.cpp
+    Runners/Scores.cpp
+    Runners/Instructions.cpp
     )
 
 set(include_dir ${PROJECT_SOURCE_DIR}/include)
@@ -22,6 +24,8 @@ set(includes
     ${lib_dir}/PixelPerfectDetection.hpp
     ${lib_dir}/Runners/GameRunner.hpp
     ${lib_dir}/Runners/IRunner.hpp
+    ${lib_dir}/Runners/ScoreRunner.hpp
+    ${lib_dir}/Runners/InstructRunner.hpp
     )
 
 add_library(${lib_name} ${sources} ${includes})
