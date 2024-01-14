@@ -25,6 +25,9 @@ private:
     sf::Texture background_texture; // Background texture (image)
     sf::Sprite background_sprite;   // Background Sprite
 
+    sf::Texture sign_texture;
+    sf::Sprite  sign_sprite;
+
     sf::Texture person_texture;
     sf::Sprite person_sprite;
 

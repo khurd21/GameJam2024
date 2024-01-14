@@ -4,14 +4,14 @@
 
 InstructRunner::InstructRunner(sf::RenderWindow *window) : m_window(window)
 {
-    if (!background_texture.loadFromFile("../../resources/images/background.png"))
+    if (!background_texture.loadFromFile("resources/images/background.png"))
     {
         // handle error
     }
     background_sprite.setTexture(background_texture);
 
     // Load font
-    if (!i_font.loadFromFile("../../resources/fonts/ice-season.ttf")) {
+    if (!i_font.loadFromFile("resources/fonts/ice-season.ttf")) {
         // Handle error
     }
 
@@ -26,13 +26,24 @@ InstructRunner::InstructRunner(sf::RenderWindow *window) : m_window(window)
     // Center the title in the window
     sf::FloatRect title_bounds = i_text.getLocalBounds();
     i_text.setOrigin(title_bounds.left + title_bounds.width / 2.0f, title_bounds.top + title_bounds.height / 2.0f);
-    i_text.setPosition(m_window->getSize().x / 2.0f, 100);
+    i_text.setPosition(m_window->getSize().x / 2.0f, 50);
 
     // Put HELP TEXT HERE
+    if (!sign_texture.loadFromFile("resources/images/sign.png"))
+    {
+        // handle error
+    }
+    sign_sprite.setTexture(sign_texture);
+    // position and origin for person sprite
+    sf::FloatRect sign_bounds = sign_sprite.getLocalBounds(); 
+    sign_sprite.setOrigin(sign_bounds.left + sign_bounds.width / 2.0f, sign_bounds.top + sign_bounds.height / 2.0f);
+    sign_sprite.setPosition(m_window->getSize().x / 2.0f, 700);
+
+    sign_sprite.setScale(2.5, 1.7);
 
 
     // Person Sprite
-    if (!person_texture.loadFromFile("../../resources/images/person.png")) {
+    if (!person_texture.loadFromFile("resources/images/person.png")) {
         std::cout << "Error loading sprite texture" << std::endl;
     }
     
@@ -46,7 +57,7 @@ InstructRunner::InstructRunner(sf::RenderWindow *window) : m_window(window)
 
 
     // Bird Sprite
-    if (!bird_texture.loadFromFile("../../resources/images/bird.png")) {
+    if (!bird_texture.loadFromFile("resources/images/bird.png")) {
         std::cout << "Error loading sprite texture" << std::endl;
     }
     
@@ -61,7 +72,7 @@ InstructRunner::InstructRunner(sf::RenderWindow *window) : m_window(window)
 
 
     // Cloud Sprite
-    if (!cloud_texture.loadFromFile("../../resources/images/cloud.png")) {
+    if (!cloud_texture.loadFromFile("resources/images/cloud.png")) {
         std::cout << "Error loading sprite texture" << std::endl;
     }
     
@@ -76,7 +87,7 @@ InstructRunner::InstructRunner(sf::RenderWindow *window) : m_window(window)
 
 
     // Coin1 Sprite
-    if (!coin1_texture.loadFromFile("../../resources/images/coin1.png")) {
+    if (!coin1_texture.loadFromFile("resources/images/coin1.png")) {
         std::cout << "Error loading sprite texture" << std::endl;
     }
     
@@ -91,7 +102,7 @@ InstructRunner::InstructRunner(sf::RenderWindow *window) : m_window(window)
 
 
     // Coin2 Sprite
-    if (!coin2_texture.loadFromFile("../../resources/images/coin2.png")) {
+    if (!coin2_texture.loadFromFile("resources/images/coin2.png")) {
         std::cout << "Error loading sprite texture" << std::endl;
     }
     
@@ -106,7 +117,7 @@ InstructRunner::InstructRunner(sf::RenderWindow *window) : m_window(window)
 
 
     // Time5 Sprite
-    if (!time5_texture.loadFromFile("../../resources/images/time5.png")) {
+    if (!time5_texture.loadFromFile("resources/images/time5.png")) {
         std::cout << "Error loading sprite texture" << std::endl;
     }
     
@@ -121,7 +132,7 @@ InstructRunner::InstructRunner(sf::RenderWindow *window) : m_window(window)
 
 
     // Time10 Sprite
-    if (!time10_texture.loadFromFile("../../resources/images/time10.png")) {
+    if (!time10_texture.loadFromFile("resources/images/time10.png")) {
         std::cout << "Error loading sprite texture" << std::endl;
     }
     
@@ -137,6 +148,7 @@ InstructRunner::InstructRunner(sf::RenderWindow *window) : m_window(window)
 
 void InstructRunner::drawInstruct() {
     m_window->draw(background_sprite);
+    m_window->draw(sign_sprite);
     m_window->draw(i_text);
     m_window->draw(person_sprite);
 

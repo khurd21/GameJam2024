@@ -3,16 +3,17 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 
-ScoreRunner::ScoreRunner(sf::RenderWindow *window) : m_window(window), current_username("wsu")
+ScoreRunner::ScoreRunner(sf::RenderWindow *window, std::string filename) : m_window(window), current_username("wsu")
 {
-    if (!background_texture.loadFromFile("../../resources/images/background.png"))
+    if (!background_texture.loadFromFile("resources/images/background.png"))
     {
         // handle error
     }
     background_sprite.setTexture(background_texture);
 
-    if (!sign_texture.loadFromFile("../../resources/images/sign.png"))
+    if (!sign_texture.loadFromFile("resources/images/sign.png"))
     {
         // handle error
     }
@@ -24,7 +25,7 @@ ScoreRunner::ScoreRunner(sf::RenderWindow *window) : m_window(window), current_u
 
     sign_sprite.setScale(2.5, 1.5);
 
-    loadScoresFromFile("../../resources/ski_jump_data.csv");
+    loadScoresFromFile(filename);
     m_window->clear();
 
     std::cout << "Scores:\n";
@@ -36,7 +37,7 @@ ScoreRunner::ScoreRunner(sf::RenderWindow *window) : m_window(window), current_u
     }
 
     // Load font
-    if (!i_font.loadFromFile("../../resources/fonts/ice-season.ttf"))
+    if (!i_font.loadFromFile("resources/fonts/ice-season.ttf"))
     {
         // Handle error
     }
@@ -55,13 +56,13 @@ ScoreRunner::ScoreRunner(sf::RenderWindow *window) : m_window(window), current_u
     i_text.setPosition(m_window->getSize().x / 2.0f, 100);
 
     help_text_1.setFont(i_font);
-    help_text_1.setString("Press 'Enter' or 'Escape' to save username go back to menu");
+    help_text_1.setString("Press 'Enter' to save username and go back to menu.");
     help_text_1.setCharacterSize(30);
     help_text_1.setFillColor(sf::Color::White); // Color of the title
     help_text_1.setStyle(sf::Text::Bold);
 
     help_text_2.setFont(i_font);
-    help_text_2.setString("Start typing to create and/or change your username");
+    help_text_2.setString("Start typing to change your username.");
     help_text_2.setCharacterSize(30);
     help_text_2.setFillColor(sf::Color::White); // Color of the title
     help_text_2.setStyle(sf::Text::Bold);
@@ -73,6 +74,22 @@ ScoreRunner::ScoreRunner(sf::RenderWindow *window) : m_window(window), current_u
     sf::FloatRect help2_bounds = help_text_2.getLocalBounds();
     help_text_2.setOrigin(help2_bounds.left + help2_bounds.width / 2.0f, help2_bounds.top + help2_bounds.height / 2.0f);
     help_text_2.setPosition(680, 450);
+}
+
+void ScoreRunner::saveScores()
+{
+    // write the file back to csv and save
+    std::ofstream outfile;
+    outfile.open("resources/ski_jump_data.csv", std::fstream::out);
+    outfile << "UserName,Score"
+            << "\n";
+    for (const auto &scoreEntry : scores)
+    {
+        std::string username = std::get<0>(scoreEntry);
+        int score = std::get<1>(scoreEntry);
+        outfile << username << "," << score << "\n";
+    }
+    outfile.close();
 }
 
 void ScoreRunner::loadScoresFromFile(const std::string &filename)
@@ -89,6 +106,28 @@ void ScoreRunner::loadScoresFromFile(const std::string &filename)
             scores.push_back(std::make_tuple(username, score));
         }
     }
+}
+
+void ScoreRunner::addScore(int score)
+{
+    // sort based on if it fits in the top 10
+    scores.push_back(std::make_tuple(current_username, score));
+
+    // lambda function to sort first based on score then alphabetical order
+    std::sort(scores.begin(), scores.end(),
+              [](const std::tuple<std::string, int> &a, const std::tuple<std::string, int> &b)
+              {
+                  if (std::get<1>(a) == std::get<1>(b))
+                  {
+                      return std::get<0>(a) < std::get<0>(b);
+                  }
+                  return std::get<1>(a) > std::get<1>(b);
+              });
+
+    // removes last element not in top 10
+    scores.pop_back();
+
+    saveScores();
 }
 
 void ScoreRunner::drawUsername()

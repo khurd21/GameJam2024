@@ -6,16 +6,18 @@
 #include <vector>
 #include <string>
 #include <tuple>
-
+const inline std::string default_filename="resources/ski_jump_data.csv";
 class ScoreRunner : public IRunner {
 public:
-    ScoreRunner(sf::RenderWindow* window);
+    ScoreRunner(sf::RenderWindow* window, std::string filename=default_filename);
     virtual void run() override;
 
     void loadScoresFromFile(const std::string& filename);
     void drawUsername();
     void drawScores();
     void updateCurrentUsernameText();
+    void addScore(int score);
+    void saveScores();
 
 
 private:
