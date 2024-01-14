@@ -5,6 +5,7 @@ set(sources
     Objects/Wall.cpp
     Objects/Token.cpp
     Game.cpp
+    PixelPerfectDetection.cpp
     Runners/GameRunner.cpp
     )
 
@@ -17,6 +18,8 @@ set(includes
     ${lib_dir}/Objects/Token.hpp
     ${lib_dir}/Game.hpp
     ${lib_dir}/Type.hpp
+    ${lib_dir}/Textures.hpp
+    ${lib_dir}/PixelPerfectDetection.hpp
     ${lib_dir}/Runners/GameRunner.hpp
     ${lib_dir}/Runners/IRunner.hpp
     )

@@ -16,7 +16,11 @@ public:
 private:
 
     sf::RenderWindow* m_window;
-    Character m_character{800.0f, 200.0f, 30.0f};
+    sf::Font m_font;
+    sf::Text m_currentScore;
+    sf::Text m_timeLeftSeconds;
+    sf::Clock m_clock;
+    Character m_character{800.0f, 200.0f, 100.0f};
     std::vector<Token> m_birds;
     std::vector<Token> m_clock5;
     std::vector<Token> m_clock10;
@@ -24,6 +28,7 @@ private:
     std::vector<Token> m_coins1;
     std::vector<Token> m_coins2;
 
-    int m_score;
-    int m_time;
+    float m_updateInterval{ 1.0f };
+    int m_score{};
+    int m_timeSeconds{ 7 };
 };

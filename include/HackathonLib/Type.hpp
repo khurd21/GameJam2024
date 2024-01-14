@@ -3,9 +3,12 @@
 
 enum class Type {
 
-    Enemy,
+    Bird,
     Cloud,
-    PowerUp,
+    Clock5,
+    Clock10,
+    Coin1,
+    Coin2,
     Character,
 
 }; // enum class Type

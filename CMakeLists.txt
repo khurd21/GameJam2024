@@ -10,3 +10,4 @@ add_subdirectory(src/HackathonExe)
 add_subdirectory(src/HackathonLib)
 
 file(COPY ${CMAKE_SOURCE_DIR}/resources DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY ${CMAKE_SOURCE_DIR}/resources DESTINATION ${CMAKE_BINARY_DIR}/bin)

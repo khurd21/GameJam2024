@@ -17,6 +17,8 @@ public:
 
 private:
     sf::CircleShape m_shape;
+    sf::RectangleShape m_collisionShape;
+    sf::Texture m_texture;
     float m_movementSpeed{ 10.0f };
 };
 

@@ -19,7 +19,7 @@ namespace
         Score,
     }; // enum class GameState
 
-    GameState currentState{GameState::Menu};
+    GameState currentState{GameState::Game};
 
     std::unordered_map<GameState, std::unique_ptr<IRunner>> runners;
 
@@ -35,7 +35,7 @@ void Game::drawMenu()
 {
     // Load the font in and eror handling
     sf::Font menu_font;
-    if (!menu_font.loadFromFile("../../resources/fonts/ice-season.ttf"))
+    if (!menu_font.loadFromFile("resources/fonts/ice-season.ttf"))
     {
         // ERROR, exit game
     }
@@ -88,10 +88,10 @@ void Game::run()
 
             if (event.type == sf::Event::MouseButtonPressed)
             {
-                std::cout << "Any Mouse Input";
+                std::cout << "Any Mouse Input" << std::endl;
                 if (event.mouseButton.button == sf::Mouse::Left)
                 {
-                    std::cout << "Mouse Clicked";
+                    std::cout << "Mouse Clicked" << std::endl;
                 }
             }
 
