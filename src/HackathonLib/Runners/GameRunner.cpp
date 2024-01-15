@@ -1,4 +1,5 @@
 #include <HackathonLib/Runners/GameRunner.hpp>
+#include <HackathonLib/Runners/ScoreRunner.hpp>
 #include <HackathonLib/Textures.hpp>
 #include <SFML/Graphics.hpp>
 
@@ -15,6 +16,13 @@ void updateToken(Tokens&& tokens, Type type, const sf::FloatRect& boundingBox, f
             token.reset();
             token.setRandomPosition();
         }
+    }
+}
+
+template <typename Tokens>
+void updateCharacter(Character& character, Tokens&& tokens, Type type, float deltaTime) {
+    for (const auto& token : tokens) {
+        character.handleCollision(token.getBoundingBox(), type);
     }
 }
 
@@ -41,7 +49,6 @@ std::pair<int, int> updateScore(Tokens&& tokens, Type type, const sf::FloatRect&
             }
             else if (Type::Cloud == type) {
                 scoreTime.first -= 5;
-                scoreTime.second -= 10;
             }
         }
     }
@@ -63,6 +70,9 @@ void draw(Items&& items, sf::RenderWindow* window) {
 
 GameRunner::GameRunner(sf::RenderWindow* window) : m_window(window) {
 
+    m_backgroundTexture.loadFromFile("resources/images/game.png");
+    m_backgroundImage.setTexture(m_backgroundTexture);
+    m_backgroundImage.setScale({0.5, 0.5});
     m_font.loadFromFile("resources/fonts/ice-season.ttf");
     m_currentScore.setPosition(m_window->getSize().x - 200, 50);
     m_currentScore.setCharacterSize(24);
@@ -76,11 +86,22 @@ GameRunner::GameRunner(sf::RenderWindow* window) : m_window(window) {
     m_timeLeftSeconds.setFont(m_font);
     m_timeLeftSeconds.setString("Time: " + std::to_string(m_timeSeconds));
 
-    for (int i = 0; i < 3; ++i) {
+    setup();
+}
+
+void GameRunner::setup() {
+    m_character.unfreeze();
+    m_birds = {};
+    m_clouds = {};
+    m_clock5 = {};
+    m_clock10 = {};
+    m_coins1 = {};
+    m_coins2 = {};
+    for (int i = 0; i < 4; ++i) {
         m_birds.emplace_back(birdTexture, 325.0f);
     }
 
-    for (int i = 0; i < 2; ++i) {
+    for (int i = 0; i < 4; ++i) {
         m_clouds.emplace_back(cloudTexture, 1000.0f);
     }
 
@@ -99,9 +120,12 @@ GameRunner::GameRunner(sf::RenderWindow* window) : m_window(window) {
     for (int i = 0; i < 5; ++i) {
         m_coins2.emplace_back(coin2Texture, 135.0f);
     }
+    m_score = 0;
+    m_timeSeconds = 8;
 }
 
 void GameRunner::run() {
+    setup();
     sf::Clock clock;
     float deltaTime{ clock.restart().asSeconds() };
 
@@ -111,7 +135,6 @@ void GameRunner::run() {
                 m_window->close();
             }
         }
-
         deltaTime = clock.restart().asSeconds();
 
         if (m_clock.getElapsedTime().asSeconds() >= m_updateInterval) {
@@ -130,6 +153,12 @@ void GameRunner::run() {
         updateToken(m_clock10, Type::Clock10, boundingBox, deltaTime);
         updateToken(m_coins1, Type::Coin1, boundingBox, deltaTime);
         updateToken(m_coins2, Type::Coin2, boundingBox, deltaTime);
+        updateCharacter(m_character, m_clouds, Type::Cloud, deltaTime);
+        updateCharacter(m_character, m_birds, Type::Bird, deltaTime);
+        updateCharacter(m_character, m_clock5, Type::Clock5, deltaTime);
+        updateCharacter(m_character, m_clock10, Type::Clock10, deltaTime);
+        updateCharacter(m_character, m_coins1, Type::Coin1, deltaTime);
+        updateCharacter(m_character, m_coins2, Type::Coin2, deltaTime);
 
         std::vector<std::pair<int, int>> scoreTimes;
         scoreTimes.emplace_back(updateScore(m_birds, Type::Bird, boundingBox));
@@ -151,12 +180,15 @@ void GameRunner::run() {
 
         if (isDead || m_timeSeconds < 0) {
             // Record the score
+            std::cout << "Lost. Final score: " << m_score << '\n';
+            ScoreRunner runner(m_window);
+            runner.addScore(m_score);
             return;
         }
 
         m_currentScore.setString("Score: " + std::to_string(m_score));
         m_timeLeftSeconds.setString("Time: " + std::to_string(m_timeSeconds));
-
+        m_window->draw(m_backgroundImage);
         draw(m_birds, m_window);
         draw(m_clouds, m_window);
         draw(m_clock5, m_window);

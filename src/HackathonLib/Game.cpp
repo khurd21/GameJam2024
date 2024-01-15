@@ -21,7 +21,7 @@ namespace
         Score,
     }; // enum class GameState
 
-    GameState currentState{GameState::Game};
+    GameState currentState{GameState::Menu};
 
     std::unordered_map<GameState, std::unique_ptr<IRunner>> runners;
 
@@ -30,7 +30,9 @@ namespace
 Game::Game() : m_window(std::make_unique<sf::RenderWindow>(sf::VideoMode(1920u, 1080u), "Hackathon"))
 {
     m_window->setFramerateLimit(60);
-
+    if(!m_backgroundMusic.openFromFile("resources/sounds/GameJam2024.ogg")) {
+        std::cout << "No load music :(\n";
+    }
     // Load background image
     if (!background_texture.loadFromFile("../../resources/images/background.png"))
     {
@@ -41,6 +43,10 @@ Game::Game() : m_window(std::make_unique<sf::RenderWindow>(sf::VideoMode(1920u, 
     runners[GameState::Game] = std::make_unique<GameRunner>(m_window.get());
     runners[GameState::Instruct] = std::make_unique<InstructRunner>(m_window.get());
     runners[GameState::Score] = std::make_unique<ScoreRunner>(m_window.get());
+
+    std::cout << "Background music\n";
+    m_backgroundMusic.setLoop(true);
+    m_backgroundMusic.setVolume(30);
 }
 
 void Game::drawMenu()
@@ -136,6 +142,7 @@ void Game::drawMenu()
 
 void Game::run()
 {
+    m_backgroundMusic.play();
     while (m_window->isOpen())
     {
         for (auto event = sf::Event{}; m_window->pollEvent(event);)

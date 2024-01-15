@@ -28,12 +28,12 @@ Token::Token(const sf::Texture& texture, float movementSpeed)
 
 void Token::update(float deltaTime) {
     const auto& position{ m_shape.getPosition() };
-    m_collisionShape.setPosition(position.x + 35, position.y + 55);
     if (!m_isLaunched) {
         std::uniform_int_distribution<std::mt19937::result_type> dist(1, 500);
         m_isLaunched = dist(rng) == 297;
     }
     else if (m_isFading) {
+        m_collisionShape.setPosition(2'000, 2'000);
         m_fadeTimer -= deltaTime;
         if (m_fadeTimer <= 0.0f) {
             m_readyForRemoval = true;
@@ -44,6 +44,7 @@ void Token::update(float deltaTime) {
         }
     }
     else {
+        m_collisionShape.setPosition(position.x + 35, position.y + 55);
         m_shape.setFillColor(m_originalColor);
         m_shape.move({-deltaTime * m_movementSpeed, -deltaTime * m_movementSpeed});
     }

@@ -4,7 +4,15 @@ project(Hackathon LANGUAGES CXX)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_CXX_STANDARD 20)
 
-find_package(SFML 2.6 COMPONENTS system window graphics network audio REQUIRED)
+include(FetchContent)
+
+# Fetch SFML from the official repository
+FetchContent_Declare(
+    SFML
+    GIT_REPOSITORY git@github.com:SFML/SFML.git
+    GIT_TAG master
+)
+FetchContent_MakeAvailable(SFML)
 
 add_subdirectory(src/HackathonExe)
 add_subdirectory(src/HackathonLib)

@@ -30,6 +30,7 @@ private:
 
     std::vector<std::tuple<std::string, int>> scores; // Store up to 10 username-score tuples ex. [("John", 69), ("Andy", 20), ....] CHANGE LATER TO BE ONLY 10 ENTIRES MAX
     std::string current_username; // Store the current user's username
+    std::string m_filename;
     sf::Text current_username_text;
 
 

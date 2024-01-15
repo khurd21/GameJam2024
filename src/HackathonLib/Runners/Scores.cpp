@@ -5,7 +5,7 @@
 #include <sstream>
 #include <algorithm>
 
-ScoreRunner::ScoreRunner(sf::RenderWindow *window, std::string filename) : m_window(window), current_username("wsu")
+ScoreRunner::ScoreRunner(sf::RenderWindow *window, std::string filename) : m_window(window), current_username("wsu"), m_filename(std::move(filename))
 {
     if (!background_texture.loadFromFile("resources/images/background.png"))
     {
@@ -25,7 +25,7 @@ ScoreRunner::ScoreRunner(sf::RenderWindow *window, std::string filename) : m_win
 
     sign_sprite.setScale(2.5, 1.5);
 
-    loadScoresFromFile(filename);
+    loadScoresFromFile(m_filename);
     m_window->clear();
 
     std::cout << "Scores:\n";
@@ -79,8 +79,12 @@ ScoreRunner::ScoreRunner(sf::RenderWindow *window, std::string filename) : m_win
 void ScoreRunner::saveScores()
 {
     // write the file back to csv and save
-    std::ofstream outfile;
-    outfile.open("resources/ski_jump_data.csv", std::fstream::out);
+    std::ofstream outfile(m_filename, std::fstream::out);
+    if (!outfile.is_open())
+    {
+        std::cout << "Error: Unable to open the file for writing." << std::endl;
+        return;
+    }
     outfile << "UserName,Score"
             << "\n";
     for (const auto &scoreEntry : scores)
@@ -88,12 +92,14 @@ void ScoreRunner::saveScores()
         std::string username = std::get<0>(scoreEntry);
         int score = std::get<1>(scoreEntry);
         outfile << username << "," << score << "\n";
+        std::cout << username << "," << score << '\n';
     }
     outfile.close();
 }
 
 void ScoreRunner::loadScoresFromFile(const std::string &filename)
 {
+    scores = {};
     std::ifstream file(filename);
     std::string line;
     while (std::getline(file, line))
@@ -125,7 +131,9 @@ void ScoreRunner::addScore(int score)
               });
 
     // removes last element not in top 10
-    scores.pop_back();
+    if (scores.size() > 10) {
+        scores.pop_back();
+    }
 
     saveScores();
 }
@@ -209,6 +217,7 @@ void ScoreRunner::drawScores()
 void ScoreRunner::run()
 {
     std::cout << "IN Scores" << std::endl;
+    loadScoresFromFile(m_filename);
     while (m_window->isOpen())
     {
         // Process events

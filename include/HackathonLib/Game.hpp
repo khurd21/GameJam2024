@@ -2,6 +2,7 @@
 #define GAME_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <HackathonLib/Runners/IRunner.hpp>
 
 #include <memory>
@@ -21,6 +22,7 @@ private:
 
     sf::Texture person_texture; // Person texture (image)
     sf::Sprite person_sprite;   // Person Sprite
+    sf::Music m_backgroundMusic;
 
     void drawMenu();   // method to handle the creation a drawing of the menu
 }; // class Game

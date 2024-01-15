@@ -15,11 +15,15 @@ public:
 
 private:
 
+    void setup();
+
     sf::RenderWindow* m_window;
     sf::Font m_font;
     sf::Text m_currentScore;
     sf::Text m_timeLeftSeconds;
     sf::Clock m_clock;
+    sf::Texture m_backgroundTexture;
+    sf::Sprite m_backgroundImage;
     Character m_character{800.0f, 200.0f, 100.0f};
     std::vector<Token> m_birds;
     std::vector<Token> m_clock5;
