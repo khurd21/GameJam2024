@@ -49,6 +49,11 @@ private:
     sf::Texture time10_texture;
     sf::Sprite  time10_sprite;
 
+    sf::Text person_text;
+    sf::Text coin_text;
+    sf::Text time_text;
+    sf::Text enemy_text;
+
 }; // class Instructions
 
 #endif // INSTRUCTIONS_HPP
