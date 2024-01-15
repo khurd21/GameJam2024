@@ -34,7 +34,7 @@ Game::Game() : m_window(std::make_unique<sf::RenderWindow>(sf::VideoMode(1920u, 
         std::cout << "No load music :(\n";
     }
     // Load background image
-    if (!background_texture.loadFromFile("../../resources/images/background.png"))
+    if (!background_texture.loadFromFile("resources/images/background.png"))
     {
         // handle error
     }
@@ -80,7 +80,7 @@ void Game::drawMenu()
 
     m_window->draw(title_text);
 
-    if (!person_texture.loadFromFile("../../resources/images/person.png")) {
+    if (!person_texture.loadFromFile("resources/images/person.png")) {
         // Handle error - For example, you could print an error message and terminate the application
         std::cout << "Error loading sprite texture" << std::endl;
     }
