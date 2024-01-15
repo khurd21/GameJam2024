@@ -1,6 +1,7 @@
 set(lib_name HackathonLib)
 
 set(sources
+    main.cpp
     Objects/Character.cpp
     Objects/Wall.cpp
     Objects/Token.cpp
@@ -28,8 +29,7 @@ set(includes
     ${lib_dir}/Runners/InstructRunner.hpp
     )
 
-add_library(${lib_name} ${sources} ${includes})
-add_library(${PROJECT_NAME}::${lib_name} ALIAS ${lib_name})
+add_executable(${lib_name} ${sources} ${includes})
 
 target_include_directories(${lib_name} PRIVATE ${include_dir})
 target_include_directories(${lib_name} PRIVATE ${SFML_INCLUDE_DIRS})

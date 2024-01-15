@@ -14,7 +14,6 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(SFML)
 
-add_subdirectory(src/HackathonExe)
 add_subdirectory(src/HackathonLib)
 
 file(COPY ${CMAKE_SOURCE_DIR}/resources DESTINATION ${CMAKE_BINARY_DIR})
